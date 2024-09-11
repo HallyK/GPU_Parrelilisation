@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+ <rdmgr>
+  <timestamp type="u64_t">1715553393</timestamp>
+  <hostname>LAPTOP-NS1JDKRF</hostname>
+  <os>windows</os>
+  <product>Intel® VTune™ Profiler 2024.1.0</product>
+  <buildNumber type="s32_t">627630</buildNumber>
+  <logicalCPUCount type="s32_t">12</logicalCPUCount>
+  <physicalCoreCount type="s32_t">6</physicalCoreCount>
+  <processorPackageCount type="s32_t">1</processorPackageCount>
+  <CPUFrequency type="s64_t">2700000000</CPUFrequency>
+  <CPUFamily type="s32_t">6</CPUFamily>
+  <CPUModel type="s32_t">141</CPUModel>
+  <CPUStepping type="s32_t">1</CPUStepping>
+  <CPUBrandName>11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz</CPUBrandName>
+  <isa>avx512</isa>
+  <collectionTimeBegin type="u64_t">1715553394</collectionTimeBegin>
+  <collectionTimeEnd type="u64_t">1715553405</collectionTimeEnd>
+  <variables>
+   <at>ps</at>
+  </variables>
+ </rdmgr>
+</root>

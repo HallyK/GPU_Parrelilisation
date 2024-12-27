@@ -5,7 +5,7 @@ Using the base of intel one api to code up a oascals trtiangle calculation the b
   
 </p>
 
-
+------------------------------------------------------
 <p align="center">
 The modifiable files can be found in the masters branch, this can aslo be directly downloaded into VS Studio 2022, once the intel one api has also bee downloaded and configured onto the system to allow for the DPC++ code base to compile using (only intels) GPU's to do their multi-threading work and tasks. 
 </p>

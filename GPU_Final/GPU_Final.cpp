@@ -7,15 +7,12 @@
 
 
 #include <CL/sycl.hpp>//sycl header
-
 #include <iostream>// input output stream
-
 #include <vector>// vector container
 
 
 
 using namespace sycl;// Access sycl computation
-
 constexpr size_t local_size = 4096;  // Local size chosen based on typical GPU capabilities
 
 
@@ -25,30 +22,19 @@ int main() {
     try {
 
         sycl::queue q(sycl::cpu_selector{}, property_list{});
-
         std::cout << "Running on " << q.get_device().get_info<sycl::info::device::name>() << "\n";
-
         constexpr size_t numRows = 2;
 
         // Allocate Unified Shared Memory for the triangle
 
-        auto triangle = malloc_shared<int*>(numRows, q);
-
-
+        auto triangle = malloc_shared<int*>(numRows, q)
 
         for (size_t i = 0; i < numRows; ++i) {
 
-
-
             triangle[i] = malloc_shared<int>(i + 1, q);
-
-
-
             //strating position for Pascals triangle
 
             if (i == 0) {
-
-
 
                 triangle[i][0] = 1;
 
@@ -71,30 +57,21 @@ int main() {
                     }
 
                     }).wait();
-
             }
 
         }
 
-
-
         // Compute Pascal's Triangle using both USM and local memory
 
         for (size_t i = 2; i < numRows; ++i) {
-
-
-
+            
             buffer<int, 1> bufCurr(triangle[i], range<1>(i + 1));
 
             q.submit([&](handler& h) {
 
-
-
                 auto accCurr = bufCurr.get_access<access::mode::read_write>(h);
 
                 accessor<int, 1, access::mode::read_write, access::target::local> localPrev(range<1>(local_size + 2), h);
-
-
 
                 // Access kenral for parallel computation across multiple units
 
@@ -116,11 +93,7 @@ int main() {
 
                     }
 
-
-
                     if (global_id < i) {
-
-
 
                         localPrev[local_id + 1] = triangle[i - 1][global_id];
 
@@ -128,13 +101,9 @@ int main() {
 
                     it.barrier();
 
-
-
                     // Compute the current element using the local memory
 
                     if (global_id > 0 && global_id < i) {
-
-
 
                         accCurr[global_id] = localPrev[local_id] + localPrev[local_id + 1];
 
@@ -146,17 +115,11 @@ int main() {
 
         }
 
-
-
         // Itterate through the rows and triangle data to output Pascals triangle
 
         for (size_t i = 0; i < numRows; ++i) {
 
-
-
             for (size_t j = 0; j <= i; ++j) {
-
-
 
                 std::cout << triangle[i][j] << " ";
 
@@ -171,12 +134,6 @@ int main() {
 
         free(triangle, q);  // Free the array of pointers
 
-
-
-
-
-
-
     }
 
     catch (const sycl::exception& e) {
@@ -186,6 +143,4 @@ int main() {
         return -1;
 
     }
-
-
 }
